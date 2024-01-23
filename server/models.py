@@ -1,16 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
-from app import bcrypt
 
-
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
-
-db = SQLAlchemy(metadata=metadata)
+from config import bcrypt, db
 
 
 class User(db.Model, SerializerMixin):
@@ -84,8 +76,8 @@ class Comment(db.Model, SerializerMixin):
     serialize_rules = ('-post.comments', '-user.comments')
 
     id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     content = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     update_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -114,13 +106,12 @@ class Post(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     phase = db.Column(db.Integer)
-    minutes_to_read = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
     resources = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # Table relationship
     comments = db.relationship('Comment', back_populates='post')
@@ -163,8 +154,8 @@ class Vote(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     vote_type = db.Column(db.Boolean)
-    user_id = db.Column(db.Integer. db.ForeignKey('user.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     # Table relations
