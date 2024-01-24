@@ -1,0 +1,70 @@
+:root {
+  --orange: #fb5607;
+  --red: #c1121f;
+  --blue: #219ebc;
+  --green: #3a5a40;
+}
+
+.about-container {
+  padding: 2rem;
+}
+.discover-build-debug-blog {
+  font-size: 2rem;
+  letter-spacing: 0.25rem;
+}
+.discover-build-debug-blog span:nth-child(1) {
+  color: var(--orange);
+}
+.discover-build-debug-blog span:nth-child(2) {
+  color: var(--blue);
+}
+.discover-build-debug-blog span:nth-child(3) {
+  color: var(--red);
+}
+.discover-build-debug-blog span:nth-child(4) {
+  color: var(--green);
+}
+.about {
+  margin-top: 1rem;
+  line-height: 1.5rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.05rem;
+  font-weight: 300;
+}
+.cards {
+  width: 95%;
+  margin-top: 3rem;
+  /* margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto; */
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  gap: 1rem;
+}
+.cards .card:nth-child(1) {
+  background-color: var(--orange);
+}
+.cards .card:nth-child(2) {
+  background-color: var(--blue);
+}
+.cards .card:nth-child(3) {
+  background-color: var(--red);
+}
+.cards .card:nth-child(4) {
+  background-color: var(--green);
+}
+.card {
+  border-radius: 7px;
+  border: 1px solid #ccc;
+}
+
+.card img {
+  border-radius: 7px;
+  height: 200px;
+  width: 100%;
+}
+.card .image-caption {
+  margin: 0.5rem;
+  text-align: center;
+  color: var(--white);
+}

@@ -1,14 +1,13 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
-
 from server.config import bcrypt, db
 
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     serialize_rules = ('-comments.user', '-comments.post',
-                       '-votes.user', '-posts.user', '-votes.post')
+                       '-votes.user', '-posts.user', '-votes.post', '-posts.comments', '-posts.votes')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -150,7 +149,8 @@ class Post(db.Model, SerializerMixin):
 class Vote(db.Model, SerializerMixin):
 
     __tablename__ = 'votes'
-    serialize_rules = ('-user.votes', '-user.comments', '-user.posts')
+    serialize_rules = ('-user.votes', '-user.comments',
+                       '-user.posts', '-post.comments', '-post.votes', '-post.user')
 
     id = db.Column(db.Integer, primary_key=True)
     vote_type = db.Column(db.Boolean)

@@ -1,0 +1,45 @@
+.hero-container{
+    background-color: #FFC017 ;
+    height: 88vh;
+    padding-top: 8rem;
+    padding-left: 2.5rem;
+}
+
+.hero{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    line-height: 5rem;
+    width: 40%;
+    align-items: center;
+}
+
+
+.hero .title{
+    letter-spacing: -0.055em;
+    font-size: 6rem;
+    color: #000000;
+}
+
+.hero .phrase{
+    height: auto;
+    font-size: 2rem;
+    line-height: 2rem;
+}
+
+.hero-btn{
+    width:200px;
+    height: 60px;
+    padding: 15px 15px;
+    border: none;
+    color: var(--white);
+    background-color: var(--black);
+    font-size: 1.5rem;
+    transition: all 500ms ease;
+}
+
+.hero-btn:hover {
+  background-color: var(--white);
+  color: var(--black);
+  border: 1px solid #333;
+}

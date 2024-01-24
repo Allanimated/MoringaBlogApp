@@ -1,0 +1,42 @@
+:root {
+  --navy-blue: #003566;
+  --white: #fff;
+}
+
+.footer-container {
+margin-top: 4rem;
+  padding: 3rem;
+  background-color: var(--navy-blue);
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--white);
+  font-weight:200;
+}
+ul {
+  list-style-type: none;
+}
+.footer a {
+  text-decoration: none;
+  color: var(--white);
+}
+.footer .left{
+    line-height: 2.5rem;
+}
+.footer .center{
+    line-height: 3rem;
+    /* background-color: red; */
+}
+.center .location{
+    font-size: 1rem;
+}
+.center .contacts span{
+margin-left: 1rem;
+}
+.footer .right{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
