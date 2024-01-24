@@ -2,12 +2,13 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from config import bcrypt, db
+from server.config import bcrypt, db
 
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
-    serialize_rules = ('-comments.user', '-votes.user', '-posts.user')
+    serialize_rules = ('-comments.user', '-comments.post',
+                       '-votes.user', '-posts.user', '-votes.post')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -17,8 +18,8 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     # table relationship columns
     posts = db.relationship('Post', backref='user')
-    comments = db.relationship('Comment', back_populates='user')
-    votes = db.relationship('Vote', back_populates='user')
+    comments = db.relationship('Comment', backref='user')
+    votes = db.relationship('Vote', backref='user')
 
     # password and authentication
     @hybrid_property
@@ -73,7 +74,8 @@ class User(db.Model, SerializerMixin):
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
-    serialize_rules = ('-post.comments', '-user.comments')
+    serialize_rules = ('-post.comments', '-user.comments',
+                       '-user.posts', '-user.votes', '-post.user', '-post.votes')
 
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
@@ -81,9 +83,6 @@ class Comment(db.Model, SerializerMixin):
     content = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     update_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-    post = db.relationship('Post', back_populates='comments')
-    user = db.relationship('User', back_populates='comments')
 
     @validates('content')
     def validate_content(self, key, content):
@@ -102,7 +101,8 @@ class Comment(db.Model, SerializerMixin):
 class Post(db.Model, SerializerMixin):
 
     __tablename__ = 'posts'
-    serialize_rules = ('-comments.post', '-votes.post')
+    serialize_rules = ('-comments.post', '-comments.user',
+                       '-votes.post', '-votes.user', '-user.posts', '-user.comments', '-user.votes')
 
     id = db.Column(db.Integer, primary_key=True)
     phase = db.Column(db.Integer)
@@ -114,8 +114,8 @@ class Post(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # Table relationship
-    comments = db.relationship('Comment', back_populates='post')
-    votes = db.relationship('Vote', back_populates='post')
+    comments = db.relationship('Comment', backref='post')
+    votes = db.relationship('Vote', backref='post')
 
     @validates('content')
     def validate_content(self, key, content):
@@ -150,17 +150,13 @@ class Post(db.Model, SerializerMixin):
 class Vote(db.Model, SerializerMixin):
 
     __tablename__ = 'votes'
-    serialize_rules = ('-user.votes', '-post.votes')
+    serialize_rules = ('-user.votes', '-user.comments', '-user.posts')
 
     id = db.Column(db.Integer, primary_key=True)
     vote_type = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-
-    # Table relations
-    user = db.relationship('User', back_populates="votes")
-    post = db.relationship('Post', back_populates="votes")
 
     def __repr__(self):
         return f'''<Vote type: {self.vote_type}>'''
