@@ -17,6 +17,8 @@ flask-bcrypt = "*"
 flask-cors = "*"
 faker = "*"
 python-dotenv = "*"
+pyjwt = "*"
+pillow = "*"
 
 [dev-packages]
 

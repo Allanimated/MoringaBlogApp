@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, make_response, request
 from flask_restful import Api, Resource, reqparse
 from server.config import bcrypt, db
 from server.models import User, Post, Comment, Vote
+from server.auth_middleware import token_required
+
 
 user_bp = Blueprint('user_bp', __name__)
 api = Api(user_bp)
@@ -56,22 +58,50 @@ class UserByID(Resource):
 
         return make_response(jsonify(user.to_dict()), 200)
 
-    def patch(self, id):
-        try:
-            user = User.query.filter_by(id=id).first()
+    @token_required
+    def patch(current_user, *args, id):
+        user = User.query.filter_by(id=id).first()
+        if not user or current_user.id != user.id:
+            return {
+                "message": "failed to update post",
+                "error": "Unauthorized request",
+                "data": None
+            }, 401
 
+        try:
             data = request.get_json()
             for attr in data:
+                # check update fields
+                if attr not in ['username', 'password', 'email', 'full_name']:
+                    return {
+                        "message": "failed to update user. You can only update email, password, full_name or username",
+                        "error": "Unauthorized request",
+                        "data": None
+                    }, 401
+                # handle password updates
+                if attr == 'password':
+                    print(user)
+                    password_hash = bcrypt.generate_password_hash(
+                        data[attr].encode('utf-8')
+                    )
+                    setattr(user, '_password_hash', password_hash)
+
+                # update other fields
                 setattr(user, attr, data[attr])
             db.session.commit()
             return make_response(jsonify(user.to_dict()), 200)
         except ValueError as e:
             return {'error': [str(e)]}
 
-    def delete(self, id):
+    @token_required
+    def delete(current_user, *args, id):
         user = User.query.filter_by(id=id).first()
-        if not user:
-            return {"error": "user not found"}, 404
+        if not user or current_user.id != user.id:
+            return {
+                "message": "failed to delete user",
+                "error": "Unauthorized request",
+                "data": None
+            }, 401
 
         user_posts = Post.query.filter_by(user_id=id).all()
         user_comments = Comment.query.filter_by(user_id=id).all()

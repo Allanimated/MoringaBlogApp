@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/allan/Development/Code/Phase_4/phase-4-blog-project/server/instance/moringa.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
-app.secret_key = environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 
 # initialize database
 metadata = MetaData(naming_convention={
