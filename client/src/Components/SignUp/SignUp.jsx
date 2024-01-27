@@ -4,48 +4,24 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
 
-  //   const initialValues = {
-  //     username: "",
-  //     fullName: "",
-  //     email: "",
-  //     password: "",
-  //     confirmPassword: "",
-  //   };
-
-  //   const validationSchema = yup.object({
-  //     username: yup.string().required("Username required"),
-  //     fullName: yup.string().required("Full Name required"),
-  //     email: yup.string()
-  //       .email("Invalid email address")
-  //       .required("Email required"),
-  //     password: yup.string()
-  //       .min(8, "Password must be atleast 8 characters")
-  //       .required("Password required"),
-  //     confirmPassword: yup.string()
-  //       .oneOf([yup.ref("password"), null], "Passwords must match")
-  //       .required("Please confirm password"),
-  //   });
-
-  //   const onSubmit = (values) => {
-  //     console.log(values);
-  //   };
-
-  // 3 args => initialValues, validationSchema, onSubmit
   const formik = useFormik({
     initialValues: {
       username: "",
-      fullName: "",
+      full_name: "",
       email: "",
       password: "",
-      confirmPassword: "",
+      confirm_password: "",
     },
     validationSchema: yup.object().shape({
       username: yup.string().required("Username required"),
-      fullName: yup.string().required("Full Name required"),
+      full_name: yup.string().required("Full Name required"),
       email: yup
         .string()
         .email("Invalid email address")
@@ -54,7 +30,7 @@ const Signup = () => {
         .string()
         .min(8, "Password must be atleast 8 characters")
         .required("Password required"),
-      confirmPassword: yup
+      confirm_password: yup
         .string()
         .oneOf([yup.ref("password"), null], "Passwords must match")
         // .oneOf(["password"])
@@ -62,23 +38,27 @@ const Signup = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-        fetch("/signup", {
+        fetch("/users", {
           method: "POST",
           headers: {
-            "Content-Type": "application.json",
-            Accept: "application.json",
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
           body: JSON.stringify(values),
         })
           .then((response) => {
-            return response.json();
+            if (response.ok) {
+              // clear out form fields
+              formik.resetForm()
+              //set success message
+              setSuccess("Successfully created account!!")
+              //navigate user to home page
+              setTimeout(()=>{navigate('/signin')}, 2000)
+              response.json().then(data => console.log(data))
+            }else{
+              return response.json().then(err => setError(err.error[0]))
+            }
           })
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
     },
   });
 
@@ -89,9 +69,10 @@ const Signup = () => {
         <div className="left">
           <img src={logo} alt="" />
         </div>
-
         {/* right side */}
         <form className="signup-form" onSubmit={formik.handleSubmit}>
+          {error ? <h3 className="error">{error}</h3> : null}
+          {success ? <h4 className="secondary-title">{success}</h4> : null}
           <h2 className="primary-title">Register</h2>
           <p className="secondary-title">It's completely free</p>
 
@@ -111,17 +92,17 @@ const Signup = () => {
           </div>
 
           <div className="form-control">
-            <label htmlFor="fullName">Full Name</label>
+            <label htmlFor="full_name">Full Name</label>
             <br />
             <input
               type="text"
-              id="fullName"
-              name="fullName"
-              value={formik.values.fullName}
+              id="full_name"
+              name="full_name"
+              value={formik.values.full_name}
               onChange={formik.handleChange}
             />
-            {formik.touched.fullName && formik.errors.fullName ? (
-              <div className="error">{formik.errors.fullName}</div>
+            {formik.touched.full_name && formik.errors.full_name ? (
+              <div className="error">{formik.errors.full_name}</div>
             ) : null}
           </div>
 
@@ -156,17 +137,17 @@ const Signup = () => {
           </div>
 
           <div className="form-control">
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label htmlFor="confirm_password">Confirm Password</label>
             <br />
             <input
               type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formik.values.confirmPassword}
+              id="confirm_password"
+              name="confirm_password"
+              value={formik.values.confirm_password}
               onChange={formik.handleChange}
             />
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <div className="error">{formik.errors.confirmPassword}</div>
+            {formik.touched.confirm_password && formik.errors.confirm_password ? (
+              <div className="error">{formik.errors.confirm_password}</div>
             ) : null}
           </div>
 

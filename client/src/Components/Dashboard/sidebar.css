@@ -1,0 +1,28 @@
+.sidebar {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  /* padding: 2rem; */
+  box-shadow: 0 0 5px;
+}
+ul.phases {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  /* gap: 2rem; */
+}
+
+ul.phases li {
+  /* background-color: red; */
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  padding: 1rem;
+  transition: all 100ms ease;
+  display: flex;
+  gap: 1rem;
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+ul.phases li:hover{
+    background-color: #ddd;
+}
