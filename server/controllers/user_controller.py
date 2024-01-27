@@ -34,6 +34,7 @@ class Users(Resource):
             new_user = User(
                 username=args['username'],
                 email=args['email'],
+                full_name=args['full_name'],
                 _password_hash=bcrypt.generate_password_hash(
                     args['password'].encode('utf-8')
                 )
@@ -46,7 +47,7 @@ class Users(Resource):
             return response
 
         except ValueError as e:
-            return {'error': [str(e)]}
+            return {'error': [str(e)]}, 400
 
 
 class UserByID(Resource):
@@ -91,7 +92,7 @@ class UserByID(Resource):
             db.session.commit()
             return make_response(jsonify(user.to_dict()), 200)
         except ValueError as e:
-            return {'error': [str(e)]}
+            return {'error': [str(e)]}, 400
 
     @token_required
     def delete(current_user, *args, id):

@@ -53,10 +53,12 @@ class Login(Resource):
                         app.config["SECRET_KEY"],
                         algorithm="HS256"
                     )
+                    print(user.token)
 
                     return make_response(jsonify({
                         "message": "Successfully fetched auth token",
-                        "data": user.to_dict()
+                        "data": user.to_dict(),
+                        "token": str(user.token)
                     }), 200)
                 except Exception as e:
                     return {

@@ -41,7 +41,7 @@ class Posts(Resource):
 
             return response
         except ValueError as e:
-            return {'error': [str(e)]}
+            return {'error': [str(e)]}, 400
 
 
 class PostByID(Resource):

@@ -58,6 +58,9 @@ class User(db.Model, SerializerMixin):
         if not email:
             raise ValueError('Please provide an email')
 
+        if User.query.filter_by(email=email).first():
+            raise ValueError('email has been registered with anaother account')
+
         return email
 
     @validates('full_name')
