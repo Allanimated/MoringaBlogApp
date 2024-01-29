@@ -1,11 +1,8 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -15,9 +12,6 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import logo from "../../assets/logo.png";
-import zIndex from "@mui/material/styles/zIndex";
-
-// Styled components for customization
 
 function Header() {
   // State for managing menu opening/closing
@@ -127,13 +121,7 @@ function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: "#fff",
-          color: "#333",
-        }}
-      >
+      <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#333" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -144,6 +132,14 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
+          {/* <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            <img src= alt="" />
+          </Typography> */}
           <Box>
             <img src={logo} alt="" style={{ width: "200px", height: "100%" }} />
           </Box>

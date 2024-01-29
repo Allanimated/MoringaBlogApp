@@ -85,7 +85,7 @@ h5 {
 }
 
 .phase-select select {
-  width: 17%;
+  width: 100%;
   padding: 12px;
   font-size: 15px;
   font-weight: bold;

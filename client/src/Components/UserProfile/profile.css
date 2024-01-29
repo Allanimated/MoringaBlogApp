@@ -1,0 +1,174 @@
+.profile-container ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.profile-container header {
+  width: 100%;
+  background: url(https://images.unsplash.com/photo-1705943639982-4771862a4a63?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+    no-repeat 0% 50% / cover;
+  min-height: calc(100px + 15vw);
+}
+
+.profile-container .cols .left-col {
+  padding: 25px 20px;
+  text-align: center;
+  max-width: 350px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.profile-container .cols .left-col .img-container {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-container .cols .left-col .img-container img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 1px 3px 12px rgba(0, 0, 0, 0.18);
+}
+
+.profile-container .cols .left-col .img-container span {
+  position: absolute;
+  background: #2afa6a;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  bottom: 3px;
+  right: 11px;
+  border: 2px solid #fff;
+}
+
+.profile-container .cols .left-col h2 {
+  margin-top: 60px;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.profile-container .cols .left-col p {
+  font-size: 0.9rem;
+  color: #818181;
+  margin: 0;
+}
+
+.profile-container .cols .left-col .user-about {
+  justify-content: space-evenly;
+  position: relative;
+  margin: 35px 0;
+}
+
+.profile-container .cols .left-col .user-about li {
+  display: flex;
+  flex-direction: column;
+  color: #818181;
+  font-size: 0.9rem;
+}
+
+.profile-container .cols .left-col .user-about li span {
+  color: #1d1d1d;
+  font-weight: 600;
+}
+
+.profile-container .cols .left-col .user-about::after {
+  position: absolute;
+  content: "";
+  bottom: -16px;
+  display: block;
+  background: #cccccc;
+  height: 1px;
+  width: 100%;
+}
+.profile-container .cols .left-col .user-bio p {
+  font-size: 1rem;
+  color: #1d1d1d;
+  line-height: 1.8rem;
+}
+
+.profile-container .cols .left-col .user-bio ul {
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.profile-container .cols .left-col .user-bio ul li {
+  display: flex;
+}
+.profile-container .cols .left-col .user-bio ul li span {
+  font-size: 2rem;
+}
+.profile-container .cols .right-col nav {
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.profile-container .cols .right-col nav ul {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.profile-container .cols .right-col nav ul li {
+  text-transform: uppercase;
+  color: #818181;
+}
+
+.profile-container .cols .right-col nav ul li:nth-child(1) {
+  color: #1d1d1d;
+  font-weight: 600;
+}
+
+.profile-container .cols .right-col .posts {
+  max-width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsiveness */
+@media (min-width: 868px) {
+  .profile-container .cols {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 90%;
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 50px;
+  }
+  .profile-container .cols .left-col {
+    padding: 25px 0px;
+  }
+  .profile-container .cols .right-col nav ul {
+    flex-direction: row;
+    gap: 30px;
+  }
+  .profile-container .cols .right-col .posts {
+    height: 365px;
+    overflow: auto;
+    padding: 0 0 30px;
+  }
+}
+
+@media (min-width: 1017px) {
+  .profile-container .cols .left-col {
+    margin: 0;
+    margin-right: auto;
+  }
+  .profile-container .cols .right-col nav {
+    flex-direction: row;
+  }
+}
