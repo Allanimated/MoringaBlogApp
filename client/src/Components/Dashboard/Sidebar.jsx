@@ -12,6 +12,14 @@ const Sidebar = () => {
       <ul className="phases">
         <li
           onClick={() => {
+            filterPostByPhase('All');
+          }}
+        >
+          <SchoolIcon />
+          View all
+        </li>
+        <li
+          onClick={() => {
             filterPostByPhase(0);
           }}
         >

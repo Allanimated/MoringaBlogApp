@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./signin.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import { useGlobalUserContext } from "../../context/authContext";
 
 function Signin() {
   const navigate = useNavigate();
+  const { setCurrentUser } = useGlobalUserContext();
+  const [error, setError] = useState("");
 
   // 3 args => initialValues, validationSchema, onSubmit
   const formik = useFormik({
@@ -16,9 +19,7 @@ function Signin() {
     },
 
     validationSchema: yup.object().shape({
-      username: yup
-        .string()
-        .required("Email required"),
+      username: yup.string().required("Email required"),
       password: yup
         .string()
         .min(8, "Password must be atleast 8 characters")
@@ -27,23 +28,24 @@ function Signin() {
 
     onSubmit: (values) => {
       console.log(values);
-        fetch("/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(values),
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then((data) => {
+      fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
             console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
+            setCurrentUser(data);
+            navigate("/dashboard");
           });
+        } else {
+          response.json().then((err) => setError(err.error));
+        }
+      });
     },
   });
 
@@ -58,6 +60,7 @@ function Signin() {
         {/* right side */}
         <form className="signin-form" onSubmit={formik.handleSubmit}>
           <h2 className="primary-title">Login</h2>
+          {error ? <h4 className="error">{error}</h4> : null}
           <p className="secondary-title">Continue with us</p>
 
           <div className="form-control">
@@ -111,7 +114,6 @@ function Signin() {
       </div>
     </div>
   );
-
-};
+}
 
 export default Signin;

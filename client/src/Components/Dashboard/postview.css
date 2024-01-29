@@ -1,7 +1,7 @@
 .single-post {
   background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0px 5px #bbb;
+  border-radius: 20px;
+  box-shadow: 0 3px 7px #777;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -21,6 +21,7 @@
   display: flex;
   align-items: center;
   gap: 2rem;
+  color: #003566;
 }
 .vote-details {
   background-color: #ccc;
@@ -39,4 +40,10 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+}
+.read-more{
+  color: #003566;
+  cursor: pointer;
+  font-weight: bold;
 }

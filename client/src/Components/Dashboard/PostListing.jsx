@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "./postListing.css";
+import React, { useEffect } from "react";
+import "./postlisting.css";
 import PostView from "./PostView";
 import { useGlobalContext } from "../../context/postsContext";
 
@@ -17,6 +17,8 @@ const PostListing = () => {
       .then((data) => {
         // console.log(data);
         setPosts(data);
+        setFilteredPosts(data)
+
       })
       .catch((error) => {
         console.log(error);
@@ -24,13 +26,11 @@ const PostListing = () => {
   };
 
   // run side effect on initial render/once
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  useEffect(() => {fetchPosts()}, []);
 
   return (
     <div className="post-listing-container">
-      {posts.map((post) => {
+      {filteredPosts.map((post) => {
         return <PostView key={post.id} {...post} />;
       })}
     </div>

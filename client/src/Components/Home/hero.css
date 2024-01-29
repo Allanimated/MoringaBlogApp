@@ -1,45 +1,84 @@
-.hero-container{
-    background-color: #FFC017 ;
-    height: 88vh;
-    padding-top: 8rem;
-    padding-left: 2.5rem;
+.hero-container {
+  display: block;
+  background-color: #ffc017;
+  height: 88vh;
+  padding-top: 12%;
 }
 
-.hero{
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    line-height: 5rem;
-    width: 40%;
-    align-items: center;
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  line-height: 5rem;
+  margin-left: 5%;
+  width: 40%;
 }
 
-
-.hero .title{
-    letter-spacing: -0.055em;
-    font-size: 6rem;
-    color: #000000;
+.hero .title {
+  position: relative;
+  font-size: 5.5vw;
+  color: #252839;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  line-height: 5.5vw;
 }
 
-.hero .phrase{
-    height: auto;
-    font-size: 2rem;
-    line-height: 2rem;
+.hero .title::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  letter-spacing: 8px;
+  line-height: 5.5vw;
+  color: whitesmoke;
+  border-right: 0px solid #ffc017;
+  overflow: hidden;
+  animation: animate 6s linear 1;
 }
 
-.hero-btn{
-    width:200px;
-    height: 60px;
-    padding: 15px 15px;
-    border: none;
-    color: var(--white);
-    background-color: var(--black);
-    font-size: 1.5rem;
-    transition: all 500ms ease;
+/* title animation */
+
+@keyframes animate {
+  0%,
+  10%,
+  100% {
+    width: 0;
+  }
+  70%,
+  90% {
+    width: 100%;
+  }
+}
+
+.hero .phrase {
+  height: auto;
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.hero-btn {
+  width: 200px;
+  height: 60px;
+  padding: 15px 15px;
+  border: none;
+  color: var(--white);
+  background-color: var(--black);
+  font-size: 1.5rem;
+  transition: all 500ms ease;
+  opacity: 0;
+  animation: animatebtn 3s ease 1.5s forwards;
 }
 
 .hero-btn:hover {
   background-color: var(--white);
   color: var(--black);
   border: 1px solid #333;
+}
+
+@keyframes animatebtn {
+  100% {
+    opacity: 1;
+  }
 }

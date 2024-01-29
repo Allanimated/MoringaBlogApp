@@ -11,7 +11,6 @@ api = Api(vote_bp)
 parser = reqparse.RequestParser()
 parser.add_argument('vote_type', type=str, help='Provide vote')
 parser.add_argument('post_id', type=int, help='Provide post id')
-parser.add_argument('user_id', type=int, help='Provide user id')
 
 
 class Votes(Resource):
@@ -19,21 +18,27 @@ class Votes(Resource):
         vote_lc = [vote.to_dict() for vote in Vote.query.all()]
         return make_response(jsonify(vote_lc), 200)
 
-    def post(self):
+    @token_required
+    def post(current_user, *args):
         try:
             args = parser.parse_args()
+            # a user can only vote once for a particular post
+            vote = Vote.query.filter(
+                Vote.user_id == current_user.id, Vote.post_id == args['post_id']).first()
+            if vote:
+                return {'message': "Vote exist"}, 200
 
             new_vote = Vote(
                 post_id=args["post_id"],
-                user_id=args["user_id"],
-                vote_type=args["content"]
+                user_id=current_user.id,
+                vote_type=int(args["vote_type"])
             )
             db.session.add(new_vote)
             db.session.commit()
 
-            return make_response(jsonify(new_vote.to_dict()), 200)
+            return make_response(jsonify(new_vote.to_dict()), 201)
         except ValueError as e:
-            return {"error": [str(e)]}
+            return {"error": [str(e)]}, 400
 
 
 class VoteByID(Resource):

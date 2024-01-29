@@ -1,4 +1,4 @@
-from flask import request, jsonify, make_response
+from flask import request, jsonify, make_response, session
 from flask_restful import Resource
 import jwt
 from server.config import app, api
@@ -15,7 +15,16 @@ app.register_blueprint(user_bp)
 app.register_blueprint(comment_bp)
 app.register_blueprint(vote_bp)
 
-CURRENT_USER_TOKEN = None
+
+class CheckSession(Resource):
+    def get(self):
+        try:
+            if not session['token']:
+                return {'token': None}, 404
+
+            return {'token': session['token']}, 200
+        except Exception as e:
+            return {'token': None}, 404
 
 
 class Index(Resource):
@@ -53,7 +62,8 @@ class Login(Resource):
                         app.config["SECRET_KEY"],
                         algorithm="HS256"
                     )
-                    print(user.token)
+                    # set token to session
+                    session['token'] = user.token
 
                     return make_response(jsonify({
                         "message": "Successfully fetched auth token",
@@ -66,9 +76,9 @@ class Login(Resource):
                         "message": str(e)
                     }, 500
             return {
-                "message": "Error fetching auth token!, invalid username or password",
+                "message": "Error fetching auth token!.",
                 "data": None,
-                "error": "Unauthorized"
+                "error": "Invalid username or password. Try again.."
             }, 404
         except Exception as e:
             return {
@@ -79,15 +89,15 @@ class Login(Resource):
 
 
 class Logout(Resource):
-    @token_required
-    def get(current_user, *args):
-        current_user = None
+    def get(self):
+        session['token'] = None
         return {}, 200
 
 
 api.add_resource(Logout, '/logout')
 api.add_resource(Index, '/')
 api.add_resource(Login, '/login')
+api.add_resource(CheckSession, '/check_session')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

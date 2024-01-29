@@ -17,7 +17,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import logo from "../../assets/logo.png";
 
-
 // Styled components for customization
 const Search = styled("div")(({ theme }) => ({
   // Styling for the search bar
@@ -170,7 +169,7 @@ function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#333" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -190,11 +189,7 @@ function Header() {
             <img src= alt="" />
           </Typography> */}
           <Box>
-            <img
-              src={logo}
-              alt=""
-              style={{ width: "200px", height: "100%" }}
-            />
+            <img src={logo} alt="" style={{ width: "200px", height: "100%" }} />
           </Box>
           <Search>
             <SearchIconWrapper>

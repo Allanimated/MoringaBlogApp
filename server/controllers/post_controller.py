@@ -23,12 +23,12 @@ class Posts(Resource):
         return response
 
     @token_required
-    def post(current_user):
+    def post(current_user, *args):
         try:
             args = parser.parse_args()
 
             new_post = Post(
-                phase=args["phase"],
+                phase=int(args["phase"]),
                 title=args["title"],
                 content=args["content"],
                 resources=args["resources"],

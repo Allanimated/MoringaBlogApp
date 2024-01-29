@@ -34,7 +34,7 @@ def token_required(f):
             return f(current_user, *args, **kwargs)
         except Exception as e:
             return {
-                "message": "Something went wrong",
+                "message": "Something went wrong here",
                 "data": None,
                 "error": str(e)
             }, 500
