@@ -1,7 +1,9 @@
 import React from "react";
 import "./hero.css";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
+  const navigate = useNavigate();
   return (
     <div className="hero-container">
       <div className="hero">
@@ -13,7 +15,9 @@ function Hero() {
           your coding expertise.
         </p>
         <div className="btn-container">
-          <button className="hero-btn">Start reading</button>
+          <button className="hero-btn" onClick={(e) => navigate("/dashboard")}>
+            Start reading
+          </button>
         </div>
       </div>
     </div>
