@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./Header";
+import Header from "../Header/Header";
 import "./create.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,7 +7,7 @@ import { useGlobalUserContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
 
 function Create() {
-  const { currentUser, token } = useGlobalUserContext();
+  const { token } = useGlobalUserContext();
 
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ function Create() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(values),
       })
