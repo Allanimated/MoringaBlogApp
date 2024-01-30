@@ -1,0 +1,84 @@
+.pv-container {
+  background-color: #eee;
+  /* height: 100vh; */
+  padding: 2rem;
+}
+.pv {
+  background-color: #fff;
+  box-shadow: 0 5px 10px #ccc;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.pv-post-owner h4 {
+  font-size: 1rem;
+}
+.pv-post-owner p {
+  font-weight: 200;
+  font-size: 1rem;
+}
+.pv-post-bottom {
+  border-top: 1px solid #ccc;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  color: #003566;
+}
+.pv-vote-details {
+  background-color: #ccc;
+  padding: 5px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 20%;
+}
+.pv-vote-details span {
+  border-right: 1px solid #333;
+  padding-right: 1rem;
+}
+.pv-comment-details {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.pv-comment-form .comment-label {
+  font-size: 0.75rem;
+}
+.pv-comment-form .comment-label .pv-username {
+  color: red;
+}
+.pv-comment-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+.pv-comment-form .pv-comment-btn {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #003566;
+  color: #ccc;
+  margin-right: 0;
+  transition: all 300ms ease;
+  border: none;
+  outline: none;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+.pv-comment-form .pv-comment-btn:hover {
+  background-color: #ccc;
+  color: #003566;
+}
+.comments-container {
+  border-top: 1px solid #ccc;
+  color: #333;
+  /* background-color: red; */
+}

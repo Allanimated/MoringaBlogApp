@@ -1,0 +1,21 @@
+.comment {
+  /* background-color: red; */
+}
+.comment-author-time {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.comment .author,
+.comment .time {
+  font-size: 0.75rem;
+}
+.comment .time::before,
+.comment .time::after {
+  content: ".";
+}
+.comment .comment-content {
+  /* background-color: RED; */
+  padding: 1rem 2rem 1rem 2rem;
+  border-left: 1px solid #ccc;
+}
