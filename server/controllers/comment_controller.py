@@ -4,6 +4,7 @@ from server.models import Comment
 from server.config import db
 from server.auth_middleware import token_required
 
+
 comment_bp = Blueprint("comment_bp", __name__)
 api = Api(comment_bp)
 

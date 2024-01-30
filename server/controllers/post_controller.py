@@ -1,8 +1,10 @@
 from flask import Blueprint, make_response, jsonify, request
+from sqlalchemy import desc
 from flask_restful import Api, Resource, reqparse
 from server.models import User, Post, Comment, Vote
 from server.config import db
 from server.auth_middleware import token_required
+
 
 post_bp = Blueprint("post_bp", __name__)
 api = Api(post_bp)
@@ -16,7 +18,8 @@ parser.add_argument('resources', type=str, help='Provide resources')
 
 class Posts(Resource):
     def get(self):
-        post_lc = [post.to_dict() for post in Post.query.all()]
+        post_lc = [post.to_dict()
+                   for post in Post.query.order_by(desc(Post.created_at)).all()]
 
         response = make_response(jsonify(post_lc), 200)
 
