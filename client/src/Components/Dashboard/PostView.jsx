@@ -4,6 +4,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useGlobalUserContext } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 const PostView = ({
   id,
@@ -17,61 +18,53 @@ const PostView = ({
   comments,
 }) => {
   const [isFullTextVisible, setIsFullTextVisible] = useState(false);
-  const {token} = useGlobalUserContext()
-
+  const { token } = useGlobalUserContext();
+  const navigate = useNavigate();
   const toggleReadMore = () => {
     setIsFullTextVisible(!isFullTextVisible);
   };
 
-
   function handleUpvote(e) {
-    fetch('/votes', {
-      method: 'POST',
+    fetch("/votes", {
+      method: "POST",
       headers: {
         "Content-Type": "Application/json",
-        Authorization : `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
-      body: JSON.stringify(
-        {
-          "post_id": id,
-          "vote_type": 1
-        }
-      )
-    })
-    .then((resp)=>{
+      body: JSON.stringify({
+        post_id: id,
+        vote_type: 1,
+      }),
+    }).then((resp) => {
       if (resp.ok) {
-        resp.json().then(data => console.log(data))
+        resp.json().then((data) => console.log(data));
       } else {
-        resp.json().then(err => console.log(err))
-      }  
-    })
+        resp.json().then((err) => console.log(err));
+      }
+    });
   }
 
   function handleDownVote(e) {
-    fetch('/votes', {
-      method: 'POST',
+    fetch("/votes", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization : `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
-      body: JSON.stringify(
-        {
-          "post_id": id,
-          "vote_type": 2
-        }
-      )
-    })
-    .then((resp)=>{
+      body: JSON.stringify({
+        post_id: id,
+        vote_type: 2,
+      }),
+    }).then((resp) => {
       if (resp.ok) {
-        resp.json().then(data => console.log(data))
+        resp.json().then((data) => console.log(data));
       } else {
-        resp.json().then(err => console.log(err))
-      }  
-    })
+        resp.json().then((err) => console.log(err));
+      }
+    });
   }
-  
 
   const numberOfVotes = votes.filter((vote) => {
     return vote.vote_type === true;
@@ -105,12 +98,16 @@ const PostView = ({
 
       <div className="post-bottom">
         <div className="vote-details">
-          <ThumbUpIcon onClick={handleUpvote}/>
+          <ThumbUpIcon onClick={handleUpvote} />
           <span>{numberOfVotes.length}</span>
-          <ThumbDownIcon onClick={handleDownVote}/>
+          <ThumbDownIcon onClick={handleDownVote} />
         </div>
         <div className="comment-details">
-          <CommentIcon />
+          <CommentIcon
+            onClick={(e) => {
+              navigate(`/posts/${id}`);
+            }}
+          />
           <span>{comments.length}</span>
         </div>
       </div>

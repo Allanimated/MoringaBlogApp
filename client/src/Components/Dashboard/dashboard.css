@@ -1,4 +1,4 @@
-.dashboard .left-center-right{
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
+.dashboard .left-center-right {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
 }

@@ -1,8 +1,10 @@
 import React from "react";
 import "./panel.css";
 import createPostCardImage from "../../assets/createPostCardImage.avif";
+import { useNavigate } from "react-router-dom";
 
 const Panel = () => {
+  const navigate = useNavigate();
   return (
     <div className="dashboard-aside">
       <div className="create-post-card">
@@ -22,7 +24,7 @@ const Panel = () => {
 
         {/* bottom */}
         <div className="create-post-card-btn">
-          <button>Create Post</button>
+          <button onClick={(e) => navigate("/create")}>Create Post</button>
         </div>
       </div>
     </div>

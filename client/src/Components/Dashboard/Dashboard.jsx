@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "./Header";
+import Header from "../Header/Header";
 import Sidebar from "./Sidebar";
 import PostListing from "./PostListing";
-import "./dashboard.css"
+import "./dashboard.css";
 import Panel from "./Panel";
 
 const Dashboard = () => {
