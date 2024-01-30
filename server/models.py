@@ -2,12 +2,13 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from server.config import bcrypt, db
+from flask import request
 
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     serialize_rules = ('-comments.user', '-comments.post',
-                       '-votes.user', '-posts.user', '-votes.post', '-posts.comments', '-posts.votes')
+                       '-votes.user', '-posts.user', '-votes.post', '-posts.comments', '-posts.votes', '-_password_hash')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -42,7 +43,7 @@ class User(db.Model, SerializerMixin):
     def validate_username(self, key, username):
         if not username:
             raise ValueError('Please provide a username')
-        if User.query.filter_by(username=username).first():
+        if User.query.filter_by(username=username).first() and request.method == 'POST':
             raise ValueError('Username already in use')
 
         return username
@@ -58,7 +59,7 @@ class User(db.Model, SerializerMixin):
         if not email:
             raise ValueError('Please provide an email')
 
-        if User.query.filter_by(email=email).first():
+        if User.query.filter_by(email=email).first() and request.method == "POST":
             raise ValueError('email has been registered with anaother account')
 
         return email

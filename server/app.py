@@ -22,7 +22,7 @@ class CheckSession(Resource):
             if not session['token']:
                 return {'token': None}, 404
 
-            return {'token': session['token']}, 200
+            return {'token': session['token'], 'user_id': session['user_id']}, 200
         except Exception as e:
             return {'token': None}, 404
 
@@ -62,9 +62,9 @@ class Login(Resource):
                         app.config["SECRET_KEY"],
                         algorithm="HS256"
                     )
-                    # set token to session
+                    # set token and user_id to session
                     session['token'] = user.token
-
+                    session['user_id'] = user.id
                     return make_response(jsonify({
                         "message": "Successfully fetched auth token",
                         "data": user.to_dict(),
@@ -91,6 +91,7 @@ class Login(Resource):
 class Logout(Resource):
     def get(self):
         session['token'] = None
+        session['user_id'] = None
         return {}, 200
 
 
