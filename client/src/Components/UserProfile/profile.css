@@ -8,8 +8,7 @@
 
 .profile-container header {
   width: 100%;
-  background: url(https://images.unsplash.com/photo-1705943639982-4771862a4a63?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
-    no-repeat 0% 50% / cover;
+  background: url(../../assets/Userprofile.avif) no-repeat 0% 50% / cover;
   min-height: calc(100px + 15vw);
 }
 
@@ -127,15 +126,48 @@
 }
 
 .profile-container .cols .right-col nav ul li:nth-child(1) {
-  color: #1d1d1d;
+  color: var(--navy-blue);
   font-weight: 600;
 }
 
 .profile-container .cols .right-col .posts {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profile-container .cols .right-col .posts .post-cards {
   max-width: 100%;
   display: block;
-  height: 100%;
-  object-fit: cover;
+  height: fit-content;
+  box-shadow: 1px 3px 10px var(--navy-blue);
+  border-radius: 2px;
+  padding: 1rem;
+  justify-content: space-around;
+}
+
+.profile-container .cols .right-col .posts .post-cards .post-title {
+  color: var(--navy-blue);
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.profile-container .cols .right-col .posts .post-cards p {
+  color: #1d1d1d;
+  font-size: 1rem;
+  text-align: left;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.profile-container .cols .right-col .posts .post-cards em {
+  color: #2afa6a;
+}
+
+.profile-container .cols .right-col .posts .post-cards span {
+  text-align: center;
+  color: #818181;
 }
 
 /* Responsiveness */
