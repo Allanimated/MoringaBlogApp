@@ -3,7 +3,7 @@ import "./signin.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from "../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { useGlobalUserContext } from "../../context/authContext";
 
 function Signin() {
@@ -27,7 +27,6 @@ function Signin() {
     }),
 
     onSubmit: (values) => {
-      console.log(values);
       fetch("/login", {
         method: "POST",
         headers: {
@@ -37,10 +36,13 @@ function Signin() {
         body: JSON.stringify(values),
       }).then((response) => {
         if (response.ok) {
-          response.json().then((data) => {
-            console.log(data);
-            setCurrentUser(data);
-            navigate("/dashboard");
+          response.json().then((user) => {
+            //save user details on local storage
+            localStorage.setItem("token", user.token);
+            localStorage.setItem("user", JSON.stringify(user.data));
+            setTimeout(() => {
+              navigate("/dashboard");
+            }, 2000);
           });
         } else {
           response.json().then((err) => setError(err.error));
@@ -54,7 +56,7 @@ function Signin() {
       <div className="sign-in-form-container">
         {/* left side */}
         <div className="left">
-          <img src={logo} alt="" />
+          <img src={logo} alt="" onClick={(e) => navigate("/")} />
         </div>
 
         {/* right side */}

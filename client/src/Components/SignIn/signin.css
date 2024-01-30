@@ -24,6 +24,7 @@
 }
 .left img {
   width: 100%;
+  cursor: pointer;
 }
 .signin-form {
   width: 100%;

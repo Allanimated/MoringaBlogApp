@@ -8,8 +8,8 @@ import { useState } from "react";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -38,27 +38,28 @@ const Signup = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-        fetch("/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(values),
-        })
-          .then((response) => {
-            if (response.ok) {
-              // clear out form fields
-              formik.resetForm()
-              //set success message
-              setSuccess("Successfully created account!!")
-              //navigate user to home page
-              setTimeout(()=>{navigate('/signin')}, 2000)
-              response.json().then(data => console.log(data))
-            }else{
-              return response.json().then(err => setError(err.error[0]))
-            }
-          })
+      fetch("/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then((response) => {
+        if (response.ok) {
+          // clear out form fields
+          formik.resetForm();
+          //set success message
+          setSuccess("Successfully created account!!");
+          //navigate user to home page
+          setTimeout(() => {
+            navigate("/signin");
+          }, 2000);
+          response.json().then((data) => console.log(data));
+        } else {
+          return response.json().then((err) => setError(err.error[0]));
+        }
+      });
     },
   });
 
@@ -67,7 +68,7 @@ const Signup = () => {
       <div className="sign-up-form-container">
         {/* left side */}
         <div className="left">
-          <img src={logo} alt="" />
+          <img src={logo} alt="" onClick={(e) => navigate("/")} />
         </div>
         {/* right side */}
         <form className="signup-form" onSubmit={formik.handleSubmit}>
@@ -146,7 +147,8 @@ const Signup = () => {
               value={formik.values.confirm_password}
               onChange={formik.handleChange}
             />
-            {formik.touched.confirm_password && formik.errors.confirm_password ? (
+            {formik.touched.confirm_password &&
+            formik.errors.confirm_password ? (
               <div className="error">{formik.errors.confirm_password}</div>
             ) : null}
           </div>
